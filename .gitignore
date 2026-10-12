@@ -229,3 +229,4 @@ automation/scripts/conn.txt
 # Rendered per release run by `fabricops release`; the committed parameter.yml is the
 # source of truth and this is only ever machine-written.
 automation/resources/parameters/generated/
+.sf/
