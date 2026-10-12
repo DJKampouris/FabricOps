@@ -106,9 +106,11 @@ def layer_workspace_id(layer: str) -> str:
     # stamped that base's name into this workspace's description when it created it.
     description = None
     try:
-        description = invoke_api(
+        # invoke_api wraps the REST payload under "response"; the envelope itself has no
+        # "description" key, so reading it directly always returned None.
+        description = (invoke_api(
             f"https://api.fabric.microsoft.com/v1/workspaces/{current_workspace_id()}"
-        ).get("description")
+        ).get("response") or {}).get("description")
     except Exception:                                  # noqa: BLE001 - fall through to the name
         pass
     sibling = _base_workspace_for(layer, description, name, FEATURE_STORAGE.get("base_environment", "dev"))
